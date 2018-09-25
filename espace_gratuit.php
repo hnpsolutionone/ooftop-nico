@@ -42,20 +42,20 @@
 
   <!-- BEGIN OF WebGIS -->
   <!-- Library Leaflet -->
-  <link rel="stylesheet" href="leaflet/leaflet.css" />
-  <script src="leaflet/leaflet.js"></script>
+  <link rel="stylesheet" href="./libs/leaflet/leaflet.css" />
+  <script src="./libs/leaflet/leaflet.js"></script>
 
   <!-- Extension Géoportail pour Leaflet -->
-  <script src="GpPluginLeaflet/GpPluginLeaflet.js"></script>
-  <link rel="stylesheet" href="GpPluginLeaflet/GpPluginLeaflet.css" />
+  <script src="./libs/GpPluginLeaflet/GpPluginLeaflet.js"></script>
+  <link rel="stylesheet" href="./libs/GpPluginLeaflet/GpPluginLeaflet.css" />
 
   <!-- jQuery -->
-  <script src="js/jquery-1.10.1.min.js"></script>
+  <script src="./libs/js/jquery-1.10.1.min.js"></script>
   <!-- TileLayer BetterWMS -->
-  <script src="js/L.TileLayer.BetterWMS.js"></script>
+  <script src="./libs/js/L.TileLayer.BetterWMS.js"></script>
 
   <!-- jsonQ - http://ignitersworld.com/lab/jsonQ.html -->
-  <script src="js/jsonQ.min.js"></script>
+  <script src="./libs/js/jsonQ.min.js"></script>
   <style>
     #map {
       margin-top: 10px;
@@ -68,8 +68,7 @@
   <script>
       function go() {
           // Search address and return the lat lon
-          var str = urlParam('address'); // name
-          console.log(str);
+          var str = RemoveAccents(urlParam('address'));
           addr_search(str);
 
           function mainFunction(myArr)
@@ -132,25 +131,36 @@
           // Search address
           function addr_search(address)
           {
-              var xmlhttp = new XMLHttpRequest();
-              var url = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=" + address;
-              xmlhttp.onreadystatechange = function()
-              {
-                  if (this.readyState == 4 && this.status == 200)
-                  {
-                      var myArr = JSON.parse(this.responseText);
-                      console.log(myArr);
-                      mainFunction(myArr);
-                  }
-              };
-              xmlhttp.open("GET", url, true);
-              xmlhttp.send();
+              jQuery.ajax({
+                  method: "GET",
+                  url: "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=",
+                  data: {"q": address},
+              }).done(function (data) {
+                  console.log(data);
+                  mainFunction(data);
+              });
           }
 
           // Return url Param
           function urlParam(name){
               var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
               return results[1] || 0;
+          }
+
+          function RemoveAccents(strAccents) {
+              var strAccents = strAccents.split('');
+              var strAccentsOut = new Array();
+              var strAccentsLen = strAccents.length;
+              var accents = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+              var accentsOut = "AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz";
+              for (var y = 0; y < strAccentsLen; y++) {
+                  if (accents.indexOf(strAccents[y]) != -1) {
+                      strAccentsOut[y] = accentsOut.substr(accents.indexOf(strAccents[y]), 1);
+                  } else
+                      strAccentsOut[y] = strAccents[y];
+              }
+              strAccentsOut = strAccentsOut.join('');
+              return strAccentsOut;
           }
       }
 
@@ -1034,7 +1044,7 @@
               <div id="u5772" class="ax_default paragraph">
                 <div id="u5772_div" class=""></div>
                 <div id="u5772_text" class="text ">
-                  <p style="font-size:28px;"><span style="font-family:&#39;Raleway-Bold&#39;, &#39;Raleway Bold&#39;, &#39;Raleway&#39;;font-weight:700;">Synthèse</span></p><p style="font-size:14px;"><span style="font-family:&#39;Raleway-Regular&#39;, &#39;Raleway&#39;;font-weight:400;color:#666666;">84000  Avignon</span></p>
+                  <p style="font-size:28px;"><span style="font-family:&#39;Raleway-Bold&#39;, &#39;Raleway Bold&#39;, &#39;Raleway&#39;;font-weight:700;">Synthèse</span></p><p style="font-size:14px;"><span style="font-family:&#39;Raleway-Regular&#39;, &#39;Raleway&#39;;font-weight:400;color:#666666;"><?php echo $_GET['address']; ?></span></p>
                 </div>
               </div>
             </div>

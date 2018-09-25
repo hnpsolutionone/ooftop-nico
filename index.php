@@ -17,22 +17,12 @@
         ACCOUNT_SERVICE_URL = 'http://accounts.axure.com';
         ACCOUNT_SERVICE_SECURE_URL = 'https://accounts.axure.com';
         ON_PREM_LDAP_ENABLED = 'false';
-</script><script src="./index_files/jquery-1.7.1.min.js.download"></script>
+    </script>
+    <script src="./index_files/jquery-1.7.1.min.js.download"></script>
     <script src="./index_files/jquery-ui-1.8.10.custom.min.js.download"></script>
-    <!--<script src="./index_files/prototypePre.js.download"></script>-->
-    <!--<script src="./index_files/document.js.download"></script>-->
-    <!--<script src="./index_files/prototypePost.js.download"></script>-->
-    <!--<script src="./index_files/data.js.download"></script>-->
-    <!--<script type="text/javascript">
-      $axure.utils.getTransparentGifPath = function() { return 'https://d1h0x9w88ijkiq.cloudfront.net/3372/images/transparent.gif'; };
-      $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
-      $axure.utils.getReloadPath = function() { return '#.html'; };
-    </script>-->
-  <link href="./dist/easy-autocomplete.min.css" rel="stylesheet" type="text/css">
-  <script src="./js/jquery-1.12.4.js"></script>
-  <script src="./js/jquery-ui.js"></script>
-  <script src="./dist/jquery.easy-autocomplete.min.js" type="text/javascript" ></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <script src="./libs/js/jquery-1.12.4.js"></script>
+    <script src="./libs/js/jquery-ui.js"></script>
+    <script type="text/javascript" src="./libs/js/lodash.min.js"></script>
 <script>
     $(document).ready(function(){
         $("iframe").each(function( index ) {

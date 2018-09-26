@@ -11,7 +11,7 @@ $conn = pg_connect("host=$host dbname=$dbname user=$username password=$password"
 if (!$conn) {
      die("Connection to database failed: " . $conn->connect_error);
 }
-$sql = "select nom_com AS commune from \"fr-commune\" ORDER BY RANDOM() LIMIT 4;";
+$sql = "select nom_com AS commune from \"ooftop_data\".commune ORDER BY RANDOM() LIMIT 4;";
 $result = pg_query($conn, $sql);
 $resultArray = pg_fetch_all($result);
 echo json_encode($resultArray);
